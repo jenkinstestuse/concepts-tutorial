@@ -1,0 +1,382 @@
+2026-03-12 19:55:11 [INFO    ] ============================================================
+2026-03-12 19:55:11 [INFO    ] STEP 1: Verifying Docker is running
+2026-03-12 19:55:11 [INFO    ] ============================================================
+2026-03-12 19:55:11 [INFO    ] Docker is running. Server version: 27.4.0
+2026-03-12 19:55:11 [INFO    ] ============================================================
+2026-03-12 19:55:11 [INFO    ] STEP 2: Ensuring Docker network 'mimic-net' exists
+2026-03-12 19:55:11 [INFO    ] ============================================================
+2026-03-12 19:55:11 [INFO    ] SKIP: Network 'mimic-net' already exists.
+2026-03-12 19:55:11 [INFO    ] ============================================================
+2026-03-12 19:55:11 [INFO    ] STEP 3: Building PostgreSQL image 'mimic-db'
+2026-03-12 19:55:11 [INFO    ] ============================================================
+2026-03-12 19:55:11 [INFO    ] Building image 'mimic-db' from docker/Dockerfile.db ...
+2026-03-12 19:55:13 [INFO    ] Image 'mimic-db' built successfully.
+2026-03-12 19:55:13 [INFO    ] ============================================================
+2026-03-12 19:55:13 [INFO    ] STEP 4: Starting PostgreSQL container 'mimic_postgres'
+2026-03-12 19:55:13 [INFO    ] ============================================================
+2026-03-12 19:55:13 [INFO    ] Data directory: /Users/mfanti/Masters_UniversityOfTexas_Austin/AI_for_HealthCare/LearningProject2/data/db
+2026-03-12 19:55:13 [INFO    ] Creating and starting container 'mimic_postgres' ...
+2026-03-12 19:55:13 [INFO    ] Container 'mimic_postgres' created and started.
+2026-03-12 19:55:13 [INFO    ] ============================================================
+2026-03-12 19:55:13 [INFO    ] STEP 5: Waiting for PostgreSQL to accept connections
+2026-03-12 19:55:13 [INFO    ] ============================================================
+2026-03-12 19:55:13 [INFO    ] Polling every 5 s (up to 30 attempts) ...
+2026-03-12 19:55:13 [INFO    ] Not ready yet [1/30]: connection failed: connection to server at "127.0.0.1", port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: 5432, hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+- host: 'localhost', port: 5432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request. — retrying in 5 s ...
+2026-03-12 19:55:19 [INFO    ] PostgreSQL is ready (attempt 2/30).
+2026-03-12 19:55:19 [INFO    ] ============================================================
+2026-03-12 19:55:19 [INFO    ] STEP 6: Creating MIMIC-IV schemas and tables (create.sql)
+2026-03-12 19:55:19 [INFO    ] ============================================================
+2026-03-12 19:55:19 [INFO    ] Found 0/3 required schemas — running create.sql ...
+2026-03-12 19:55:19 [WARNING ] NOTE: create.sql drops and recreates schemas. Existing data will be lost.
+2026-03-12 19:55:19 [INFO    ] Schemas and tables created successfully.
+2026-03-12 19:55:19 [INFO    ] ============================================================
+2026-03-12 19:55:19 [INFO    ] STEP 7: Loading MIMIC-IV data (load_gz.sql)
+2026-03-12 19:55:19 [INFO    ] ============================================================
+2026-03-12 19:55:19 [INFO    ] NOTE: This step can take many hours for the full dataset.
+2026-03-12 19:55:19 [INFO    ] No data found in mimiciv_hosp.patients — starting data load ...
+2026-03-12 19:55:19 [INFO    ] Truncated 31 tables for clean reload.
+2026-03-12 19:55:19 [INFO    ] Data directory: /Volumes/ExternalSSD/AI_For_Healthcare_files/data
+2026-03-12 19:55:19 [INFO    ] This may take many hours. Per-table timing will appear below when complete.
+2026-03-12 19:55:19 [INFO    ] Row limits active (from './limits.json'): default=None
+2026-03-12 19:55:19 [INFO    ]   admissions                     → sourcing from core/ (not in hosp/)
+2026-03-12 19:55:19 [INFO    ]   patients                       → sourcing from core/ (not in hosp/)
+2026-03-12 19:55:19 [INFO    ]   transfers                      → sourcing from core/ (not in hosp/)
+2026-03-12 19:55:19 [INFO    ] Sourcing 3 table(s) from core/ instead of hosp/: admissions, patients, transfers
+2026-03-12 20:30:19 [INFO    ]   admissions                      started  2026-03-12 23:55:19
+2026-03-12 20:30:19 [INFO    ]   admissions                      finished 2026-03-12 23:55:21  (2.0 s)
+2026-03-12 20:30:19 [INFO    ]   d_hcpcs                         started  2026-03-12 23:55:21
+2026-03-12 20:30:19 [INFO    ]   d_hcpcs                         finished 2026-03-12 23:55:21  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   diagnoses_icd                   started  2026-03-12 23:55:21
+2026-03-12 20:30:19 [INFO    ]   diagnoses_icd                   finished 2026-03-12 23:55:26  (5.0 s)
+2026-03-12 20:30:19 [INFO    ]   d_icd_diagnoses                 started  2026-03-12 23:55:26
+2026-03-12 20:30:19 [INFO    ]   d_icd_diagnoses                 finished 2026-03-12 23:55:26  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   d_icd_procedures                started  2026-03-12 23:55:26
+2026-03-12 20:30:19 [INFO    ]   d_icd_procedures                finished 2026-03-12 23:55:26  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   d_labitems                      started  2026-03-12 23:55:26
+2026-03-12 20:30:19 [INFO    ]   d_labitems                      finished 2026-03-12 23:55:26  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   drgcodes                        started  2026-03-12 23:55:26
+2026-03-12 20:30:19 [INFO    ]   drgcodes                        finished 2026-03-12 23:55:27  (1.0 s)
+2026-03-12 20:30:19 [INFO    ]   emar_detail                     started  2026-03-12 23:55:27
+2026-03-12 20:30:19 [INFO    ]   emar_detail                     finished 2026-03-12 23:58:16  (169.0 s)
+2026-03-12 20:30:19 [INFO    ]   emar                            started  2026-03-12 23:58:16
+2026-03-12 20:30:19 [INFO    ]   emar                            finished 2026-03-13 00:00:12  (116.0 s)
+2026-03-12 20:30:19 [INFO    ]   hcpcsevents                     started  2026-03-13 00:00:12
+2026-03-12 20:30:19 [INFO    ]   hcpcsevents                     finished 2026-03-13 00:00:12  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   labevents                       started  2026-03-13 00:00:12
+2026-03-12 20:30:19 [INFO    ]   labevents                       finished 2026-03-13 00:07:12  (420.0 s)
+2026-03-12 20:30:19 [INFO    ]   microbiologyevents              started  2026-03-13 00:07:12
+2026-03-12 20:30:19 [INFO    ]   microbiologyevents              finished 2026-03-13 00:07:30  (18.0 s)
+2026-03-12 20:30:19 [INFO    ]   omr                             started  2026-03-13 00:07:30
+2026-03-12 20:30:19 [INFO    ]   omr                             finished 2026-03-13 00:07:38  (8.0 s)
+2026-03-12 20:30:19 [INFO    ]   patients                        started  2026-03-13 00:07:38
+2026-03-12 20:30:19 [INFO    ]   patients                        finished 2026-03-13 00:07:38  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   pharmacy                        started  2026-03-13 00:07:38
+2026-03-12 20:30:19 [INFO    ]   pharmacy                        finished 2026-03-13 00:09:00  (82.0 s)
+2026-03-12 20:30:19 [INFO    ]   poe_detail                      started  2026-03-13 00:09:00
+2026-03-12 20:30:19 [INFO    ]   poe_detail                      finished 2026-03-13 00:09:11  (11.0 s)
+2026-03-12 20:30:19 [INFO    ]   poe                             started  2026-03-13 00:09:11
+2026-03-12 20:30:19 [INFO    ]   poe                             finished 2026-03-13 00:11:08  (117.0 s)
+2026-03-12 20:30:19 [INFO    ]   prescriptions                   started  2026-03-13 00:11:08
+2026-03-12 20:30:19 [INFO    ]   prescriptions                   finished 2026-03-13 00:12:27  (79.0 s)
+2026-03-12 20:30:19 [INFO    ]   procedures_icd                  started  2026-03-13 00:12:27
+2026-03-12 20:30:19 [INFO    ]   procedures_icd                  finished 2026-03-13 00:12:28  (1.0 s)
+2026-03-12 20:30:19 [INFO    ]   provider                        started  2026-03-13 00:12:28
+2026-03-12 20:30:19 [INFO    ]   provider                        finished 2026-03-13 00:12:28  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   services                        started  2026-03-13 00:12:28
+2026-03-12 20:30:19 [INFO    ]   services                        finished 2026-03-13 00:12:28  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   transfers                       started  2026-03-13 00:12:28
+2026-03-12 20:30:19 [INFO    ]   transfers                       finished 2026-03-13 00:12:32  (4.0 s)
+2026-03-12 20:30:19 [INFO    ]   caregiver                       started  2026-03-13 00:12:32
+2026-03-12 20:30:19 [INFO    ]   caregiver                       finished 2026-03-13 00:12:32  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   chartevents                     started  2026-03-13 00:12:32
+2026-03-12 20:30:19 [INFO    ]   chartevents                     finished 2026-03-13 00:27:44  (912.0 s)
+2026-03-12 20:30:19 [INFO    ]   datetimeevents                  started  2026-03-13 00:27:44
+2026-03-12 20:30:19 [INFO    ]   datetimeevents                  finished 2026-03-13 00:28:06  (22.0 s)
+2026-03-12 20:30:19 [INFO    ]   d_items                         started  2026-03-13 00:28:06
+2026-03-12 20:30:19 [INFO    ]   d_items                         finished 2026-03-13 00:28:06  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   icustays                        started  2026-03-13 00:28:06
+2026-03-12 20:30:19 [INFO    ]   icustays                        finished 2026-03-13 00:28:06  (0.0 s)
+2026-03-12 20:30:19 [INFO    ]   ingredientevents                started  2026-03-13 00:28:06
+2026-03-12 20:30:19 [INFO    ]   ingredientevents                finished 2026-03-13 00:29:01  (55.0 s)
+2026-03-12 20:30:19 [INFO    ]   inputevents                     started  2026-03-13 00:29:01
+2026-03-12 20:30:19 [INFO    ]   inputevents                     finished 2026-03-13 00:30:05  (64.0 s)
+2026-03-12 20:30:19 [INFO    ]   outputevents                    started  2026-03-13 00:30:05
+2026-03-12 20:30:19 [INFO    ]   outputevents                    finished 2026-03-13 00:30:16  (11.0 s)
+2026-03-12 20:30:19 [INFO    ]   procedureevents                 started  2026-03-13 00:30:16
+2026-03-12 20:30:19 [INFO    ]   procedureevents                 finished 2026-03-13 00:30:19  (3.0 s)
+2026-03-12 20:30:19 [INFO    ] Data loaded successfully.
+2026-03-12 20:30:19 [INFO    ] ============================================================
+2026-03-12 20:30:19 [INFO    ] STEP 8: Adding primary key constraints (constraint.sql)
+2026-03-12 20:30:19 [INFO    ] ============================================================
+2026-03-12 20:30:20 [INFO    ] Row limits active — adding FK constraints with NOT VALID (skips data scan).
+2026-03-12 20:38:28 [INFO    ] Constraints added successfully.
+2026-03-12 20:38:28 [INFO    ] ============================================================
+2026-03-12 20:38:28 [INFO    ] STEP 9: Creating indexes (index.sql)
+2026-03-12 20:38:28 [INFO    ] ============================================================
+2026-03-12 20:38:28 [INFO    ] Indexes not found — running index.sql ...
+2026-03-12 21:00:08 [INFO    ] Indexes created successfully.
+2026-03-12 21:00:08 [INFO    ] ============================================================
+2026-03-12 21:00:08 [INFO    ] STEP 10: Validating row counts (validate.sql)
+2026-03-12 21:00:08 [INFO    ] ============================================================
+2026-03-12 21:01:03 [INFO    ] Validation completed — all row counts match expected values.
+2026-03-12 21:01:03 [INFO    ] ============================================================
+2026-03-12 21:01:03 [INFO    ] STEP 11: Creating MIMIC-IV-ED schema and tables (ED create.sql)
+2026-03-12 21:01:03 [INFO    ] ============================================================
+2026-03-12 21:01:03 [INFO    ] mimiciv_ed schema not found — running ED create.sql ...
+2026-03-12 21:01:03 [WARNING ] NOTE: ED create.sql drops and recreates mimiciv_ed. Existing ED data will be lost.
+2026-03-12 21:01:04 [INFO    ] ED schema and tables created successfully.
+2026-03-12 21:01:04 [INFO    ] ============================================================
+2026-03-12 21:01:04 [INFO    ] STEP 12: Loading MIMIC-IV-ED data (ED load_gz.sql)
+2026-03-12 21:01:04 [INFO    ] ============================================================
+2026-03-12 21:01:04 [INFO    ] No data found in mimiciv_ed.edstays — starting ED data load ...
+2026-03-12 21:01:04 [INFO    ] Truncated 6 tables for clean reload.
+2026-03-12 21:01:04 [INFO    ] ED data directory: /Volumes/ExternalSSD/AI_For_Healthcare_files/data/ed
+2026-03-12 21:01:04 [INFO    ] Row limits active (from './limits.json'): default=None
+2026-03-12 21:01:18 [INFO    ]   diagnosis                       started  2026-03-13 01:01:04
+2026-03-12 21:01:18 [INFO    ]   diagnosis                       finished 2026-03-13 01:01:05  (1.0 s)
+2026-03-12 21:01:18 [INFO    ]   edstays                         started  2026-03-13 01:01:05
+2026-03-12 21:01:18 [INFO    ]   edstays                         finished 2026-03-13 01:01:06  (1.0 s)
+2026-03-12 21:01:18 [INFO    ]   medrecon                        started  2026-03-13 01:01:06
+2026-03-12 21:01:18 [INFO    ]   medrecon                        finished 2026-03-13 01:01:12  (6.0 s)
+2026-03-12 21:01:18 [INFO    ]   pyxis                           started  2026-03-13 01:01:12
+2026-03-12 21:01:18 [INFO    ]   pyxis                           finished 2026-03-13 01:01:14  (2.0 s)
+2026-03-12 21:01:18 [INFO    ]   triage                          started  2026-03-13 01:01:14
+2026-03-12 21:01:18 [INFO    ]   triage                          finished 2026-03-13 01:01:15  (1.0 s)
+2026-03-12 21:01:18 [INFO    ]   vitalsign                       started  2026-03-13 01:01:15
+2026-03-12 21:01:18 [INFO    ]   vitalsign                       finished 2026-03-13 01:01:18  (3.0 s)
+2026-03-12 21:01:18 [INFO    ] ED data loaded successfully.
+2026-03-12 21:01:18 [INFO    ] ============================================================
+2026-03-12 21:01:18 [INFO    ] STEP 13: Adding MIMIC-IV-ED constraints (ED constraint.sql)
+2026-03-12 21:01:18 [INFO    ] ============================================================
+2026-03-12 21:01:18 [INFO    ] Row limits active — adding ED FK constraints with NOT VALID (skips data scan).
+2026-03-12 21:01:26 [INFO    ] ED constraints added successfully.
+2026-03-12 21:01:26 [INFO    ] ============================================================
+2026-03-12 21:01:26 [INFO    ] STEP 14: Creating MIMIC-IV-ED indexes (ED index.sql)
+2026-03-12 21:01:26 [INFO    ] ============================================================
+2026-03-12 21:01:26 [INFO    ] ED indexes not found — running ED index.sql ...
+2026-03-12 21:01:36 [INFO    ] ED indexes created successfully.
+2026-03-12 21:01:36 [INFO    ] ============================================================
+2026-03-12 21:01:36 [INFO    ] STEP 15: Validating MIMIC-IV-ED row counts (ED validate.sql)
+2026-03-12 21:01:36 [INFO    ] ============================================================
+2026-03-12 21:01:37 [INFO    ] ED validation completed — all row counts match expected values.
+2026-03-12 21:01:37 [INFO    ] ============================================================
+2026-03-12 21:01:37 [INFO    ] STEP 16: Creating mimiciv_derived schema + helper functions
+2026-03-12 21:01:37 [INFO    ] ============================================================
+2026-03-12 21:01:37 [INFO    ] mimiciv_derived schema is ready.
+2026-03-12 21:01:37 [INFO    ] Step 16a: Installing helper functions (postgres-functions.sql) ...
+2026-03-12 21:01:37 [INFO    ] Helper functions installed successfully.
+2026-03-12 21:01:37 [INFO    ] ============================================================
+2026-03-12 21:01:37 [INFO    ] STEP 17: Building MIMIC-IV derived concepts (postgres-make-concepts.sql)
+2026-03-12 21:01:37 [INFO    ] ============================================================
+2026-03-12 21:01:37 [INFO    ] Building all concepts — this may take 15–60 minutes ...
+2026-03-12 21:56:51 [INFO    ] Concepts build output:
+
+===
+Beginning to create materialized views for MIMIC database.
+Any notices of the form  "NOTICE: materialized view "XXXXXX" does not exist" can be ignored.
+The scripts drop views before creating them, and these notices indicate nothing existed prior to creating the view.
+===
+
+SET
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 10485609
+DROP TABLE
+SELECT 401850
+DROP TABLE
+SELECT 4127634
+DROP TABLE
+SELECT 4127634
+DROP TABLE
+SELECT 546028
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 697418
+DROP TABLE
+SELECT 4154226
+DROP TABLE
+SELECT 380131
+DROP TABLE
+SELECT 4976408
+DROP TABLE
+SELECT 1991167
+DROP TABLE
+SELECT 4377900
+DROP TABLE
+SELECT 546028
+DROP TABLE
+SELECT 2187060
+DROP TABLE
+SELECT 2217787
+DROP TABLE
+SELECT 43342
+DROP TABLE
+SELECT 243283
+DROP TABLE
+SELECT 174269
+DROP TABLE
+SELECT 794232
+DROP TABLE
+SELECT 7887354
+DROP TABLE
+SELECT 4126485
+DROP TABLE
+SELECT 1377514
+DROP TABLE
+SELECT 13519533
+DROP TABLE
+SELECT 546028
+DROP TABLE
+SELECT 135153
+DROP TABLE
+SELECT 949901
+DROP TABLE
+SELECT 10264
+DROP TABLE
+SELECT 18085
+DROP TABLE
+SELECT 31495
+DROP TABLE
+SELECT 10668
+DROP TABLE
+SELECT 19430
+DROP TABLE
+SELECT 459800
+DROP TABLE
+SELECT 293253
+DROP TABLE
+SELECT 209376
+DROP TABLE
+SELECT 37163
+DROP TABLE
+SELECT 475214
+DROP TABLE
+SELECT 108165
+DROP TABLE
+SELECT 4098630
+DROP TABLE
+SELECT 144813
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 811585
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 8219121
+DROP TABLE
+SELECT 949901
+DROP TABLE
+SELECT 5099899
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 41295
+DROP TABLE
+SELECT 839543
+DROP TABLE
+SELECT 783613
+
+2026-03-12 21:56:51 [WARNING ] Concepts build stderr:
+psql:demographics/icustay_times.sql:2: NOTICE:  table "icustay_times" does not exist, skipping
+psql:demographics/icustay_hourly.sql:2: NOTICE:  table "icustay_hourly" does not exist, skipping
+psql:demographics/weight_durations.sql:2: NOTICE:  table "weight_durations" does not exist, skipping
+psql:measurement/urine_output.sql:2: NOTICE:  table "urine_output" does not exist, skipping
+psql:organfailure/kdigo_uo.sql:2: NOTICE:  table "kdigo_uo" does not exist, skipping
+psql:demographics/age.sql:2: NOTICE:  table "age" does not exist, skipping
+psql:demographics/icustay_detail.sql:2: NOTICE:  table "icustay_detail" does not exist, skipping
+psql:measurement/bg.sql:2: NOTICE:  table "bg" does not exist, skipping
+psql:measurement/blood_differential.sql:2: NOTICE:  table "blood_differential" does not exist, skipping
+psql:measurement/cardiac_marker.sql:2: NOTICE:  table "cardiac_marker" does not exist, skipping
+psql:measurement/chemistry.sql:2: NOTICE:  table "chemistry" does not exist, skipping
+psql:measurement/coagulation.sql:2: NOTICE:  table "coagulation" does not exist, skipping
+psql:measurement/complete_blood_count.sql:2: NOTICE:  table "complete_blood_count" does not exist, skipping
+psql:measurement/creatinine_baseline.sql:2: NOTICE:  table "creatinine_baseline" does not exist, skipping
+psql:measurement/enzyme.sql:2: NOTICE:  table "enzyme" does not exist, skipping
+psql:measurement/gcs.sql:2: NOTICE:  table "gcs" does not exist, skipping
+psql:measurement/height.sql:2: NOTICE:  table "height" does not exist, skipping
+psql:measurement/icp.sql:2: NOTICE:  table "icp" does not exist, skipping
+psql:measurement/inflammation.sql:2: NOTICE:  table "inflammation" does not exist, skipping
+psql:measurement/oxygen_delivery.sql:2: NOTICE:  table "oxygen_delivery" does not exist, skipping
+psql:measurement/rhythm.sql:2: NOTICE:  table "rhythm" does not exist, skipping
+psql:measurement/urine_output_rate.sql:2: NOTICE:  table "urine_output_rate" does not exist, skipping
+psql:measurement/ventilator_setting.sql:2: NOTICE:  table "ventilator_setting" does not exist, skipping
+psql:measurement/vitalsign.sql:2: NOTICE:  table "vitalsign" does not exist, skipping
+psql:comorbidity/charlson.sql:2: NOTICE:  table "charlson" does not exist, skipping
+psql:medication/acei.sql:2: NOTICE:  table "acei" does not exist, skipping
+psql:medication/antibiotic.sql:2: NOTICE:  table "antibiotic" does not exist, skipping
+psql:medication/dobutamine.sql:2: NOTICE:  table "dobutamine" does not exist, skipping
+psql:medication/dopamine.sql:2: NOTICE:  table "dopamine" does not exist, skipping
+psql:medication/epinephrine.sql:2: NOTICE:  table "epinephrine" does not exist, skipping
+psql:medication/milrinone.sql:2: NOTICE:  table "milrinone" does not exist, skipping
+psql:medication/neuroblock.sql:2: NOTICE:  table "neuroblock" does not exist, skipping
+psql:medication/norepinephrine.sql:2: NOTICE:  table "norepinephrine" does not exist, skipping
+psql:medication/nsaid.sql:2: NOTICE:  table "nsaid" does not exist, skipping
+psql:medication/phenylephrine.sql:2: NOTICE:  table "phenylephrine" does not exist, skipping
+psql:medication/vasopressin.sql:2: NOTICE:  table "vasopressin" does not exist, skipping
+psql:treatment/crrt.sql:2: NOTICE:  table "crrt" does not exist, skipping
+psql:treatment/invasive_line.sql:2: NOTICE:  table "invasive_line" does not exist, skipping
+psql:treatment/rrt.sql:2: NOTICE:  table "rrt" does not exist, skipping
+psql:treatment/ventilation.sql:2: NOTICE:  table "ventilation" does not exist, skipping
+psql:firstday/first_day_bg.sql:2: NOTICE:  table "first_day_bg" does not exist, skipping
+psql:firstday/first_day_bg_art.sql:2: NOTICE:  table "first_day_bg_art" does not exist, skipping
+psql:firstday/first_day_gcs.sql:2: NOTICE:  table "first_day_gcs" does not exist, skipping
+psql:firstday/first_day_height.sql:2: NOTICE:  table "first_day_height" does not exist, skipping
+psql:firstday/first_day_lab.sql:2: NOTICE:  table "first_day_lab" does not exist, skipping
+psql:firstday/first_day_rrt.sql:2: NOTICE:  table "first_day_rrt" does not exist, skipping
+psql:firstday/first_day_urine_output.sql:2: NOTICE:  table "first_day_urine_output" does not exist, skipping
+psql:firstday/first_day_vitalsign.sql:2: NOTICE:  table "first_day_vitalsign" does not exist, skipping
+psql:firstday/first_day_weight.sql:2: NOTICE:  table "first_day_weight" does not exist, skipping
+psql:organfailure/kdigo_creatinine.sql:2: NOTICE:  table "kdigo_creatinine" does not exist, skipping
+psql:organfailure/meld.sql:2: NOTICE:  table "meld" does not exist, skipping
+psql:score/apsiii.sql:2: NOTICE:  table "apsiii" does not exist, skipping
+psql:score/lods.sql:2: NOTICE:  table "lods" does not exist, skipping
+psql:score/oasis.sql:2: NOTICE:  table "oasis" does not exist, skipping
+psql:score/sapsii.sql:2: NOTICE:  table "sapsii" does not exist, skipping
+psql:score/sirs.sql:2: NOTICE:  table "sirs" does not exist, skipping
+psql:score/sofa.sql:2: NOTICE:  table "sofa" does not exist, skipping
+psql:sepsis/suspicion_of_infection.sql:2: NOTICE:  table "suspicion_of_infection" does not exist, skipping
+psql:organfailure/kdigo_stages.sql:2: NOTICE:  table "kdigo_stages" does not exist, skipping
+psql:firstday/first_day_sofa.sql:2: NOTICE:  table "first_day_sofa" does not exist, skipping
+psql:sepsis/sepsis3.sql:2: NOTICE:  table "sepsis3" does not exist, skipping
+psql:medication/vasoactive_agent.sql:2: NOTICE:  table "vasoactive_agent" does not exist, skipping
+psql:medication/norepinephrine_equivalent_dose.sql:2: NOTICE:  table "norepinephrine_equivalent_dose" does not exist, skipping
+
+2026-03-12 21:56:51 [INFO    ] All derived concepts built successfully.

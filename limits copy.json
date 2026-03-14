@@ -1,0 +1,14 @@
+{
+    "default": 10000,
+    "overrides": {
+        "patients": 400000,
+        "admissions": 600000,
+        "icustays": 1600000,
+        "labevents": 59600000,
+        "chartevents": 55600000,
+        "prescriptions": 53600000,
+        "pharmacy": 35600000,
+        "diagnoses_icd": 9600000,
+        "d_icd_diagnoses": 1600000
+    }
+}
