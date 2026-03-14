@@ -380,3 +380,300 @@ psql:medication/vasoactive_agent.sql:2: NOTICE:  table "vasoactive_agent" does n
 psql:medication/norepinephrine_equivalent_dose.sql:2: NOTICE:  table "norepinephrine_equivalent_dose" does not exist, skipping
 
 2026-03-12 21:56:51 [INFO    ] All derived concepts built successfully.
+2026-03-14 13:26:06 [INFO    ] ============================================================
+2026-03-14 13:26:06 [INFO    ] STEP 1: Verifying Docker is running
+2026-03-14 13:26:06 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] Docker is running. Server version: 27.4.0
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] STEP 2: Ensuring Docker network 'mimic-net' exists
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] SKIP: Network 'mimic-net' already exists.
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] STEP 3: Building PostgreSQL image 'mimic-db'
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] SKIP: Image 'mimic-db' already exists — skipping build.
+2026-03-14 13:26:07 [INFO    ]       To force a rebuild: docker rmi mimic-db
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] STEP 4: Starting PostgreSQL container 'mimic_postgres'
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] Container 'mimic_postgres' exists but is in state 'exited' — starting it ...
+2026-03-14 13:26:07 [INFO    ] Container 'mimic_postgres' started.
+2026-03-14 13:26:07 [INFO    ] Container 'mimic_postgres' is already on network 'mimic-net'.
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] STEP 5: Waiting for PostgreSQL to accept connections
+2026-03-14 13:26:07 [INFO    ] ============================================================
+2026-03-14 13:26:07 [INFO    ] Polling every 5 s (up to 30 attempts) ...
+2026-03-14 13:26:07 [INFO    ] Not ready yet [1/30]: connection failed: connection to server at "::1", port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: 5432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+- host: 'localhost', port: 5432, hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request. — retrying in 5 s ...
+2026-03-14 13:26:12 [INFO    ] PostgreSQL is ready (attempt 2/30).
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] STEP 6: Creating MIMIC-IV schemas and tables (create.sql)
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] SKIP: All 3 MIMIC-IV schemas already exist with 22 tables in mimiciv_hosp.
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] STEP 7: Loading MIMIC-IV data (load_gz.sql)
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] NOTE: This step can take many hours for the full dataset.
+2026-03-14 13:26:12 [INFO    ] SKIP: mimiciv_hosp.patients already contains 364627 rows — data already loaded.
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] STEP 8: Adding primary key constraints (constraint.sql)
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] SKIP: Constraints already exist (admissions_pk + admissions_patients_fk) — skipping constraint.sql.
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] STEP 9: Creating indexes (index.sql)
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] SKIP: Index 'admissions_idx01' already exists — skipping index.sql.
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:12 [INFO    ] STEP 10: Validating row counts (validate.sql)
+2026-03-14 13:26:12 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] Validation completed — all row counts match expected values.
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] STEP 11: Creating MIMIC-IV-ED schema and tables (ED create.sql)
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] SKIP: mimiciv_ed schema already exists with 6 tables.
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] STEP 12: Loading MIMIC-IV-ED data (ED load_gz.sql)
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] SKIP: mimiciv_ed.edstays already contains 425087 rows — ED data already loaded.
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] STEP 13: Adding MIMIC-IV-ED constraints (ED constraint.sql)
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] SKIP: ED constraints already exist (edstays_pk + diagnosis_edstays_fk) — skipping ED constraint.sql.
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] STEP 14: Creating MIMIC-IV-ED indexes (ED index.sql)
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] SKIP: Index 'edstays_idx01' already exists — skipping ED index.sql.
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:38 [INFO    ] STEP 15: Validating MIMIC-IV-ED row counts (ED validate.sql)
+2026-03-14 13:26:38 [INFO    ] ============================================================
+2026-03-14 13:26:39 [INFO    ] ED validation completed — all row counts match expected values.
+2026-03-14 13:26:39 [INFO    ] ============================================================
+2026-03-14 13:26:39 [INFO    ] STEP 16: Creating mimiciv_derived schema + helper functions
+2026-03-14 13:26:39 [INFO    ] ============================================================
+2026-03-14 13:26:39 [INFO    ] mimiciv_derived schema is ready.
+2026-03-14 13:26:39 [INFO    ] Step 16a: Installing helper functions (postgres-functions.sql) ...
+2026-03-14 13:26:39 [INFO    ] SKIP: Helper function 'regexp_extract' already exists in mimiciv_derived — skipping postgres-functions.sql.
+2026-03-14 13:26:39 [INFO    ] ============================================================
+2026-03-14 13:26:39 [INFO    ] STEP 17: Building MIMIC-IV derived concepts (postgres-make-concepts.sql)
+2026-03-14 13:26:39 [INFO    ] ============================================================
+2026-03-14 13:26:39 [INFO    ] Building all concepts — this may take 15–60 minutes ...
+2026-03-14 14:20:07 [INFO    ] Concepts build output:
+
+===
+Beginning to create materialized views for MIMIC database.
+Any notices of the form  "NOTICE: materialized view "XXXXXX" does not exist" can be ignored.
+The scripts drop views before creating them, and these notices indicate nothing existed prior to creating the view.
+===
+
+SET
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 10485609
+DROP TABLE
+SELECT 401850
+DROP TABLE
+SELECT 4127634
+DROP TABLE
+SELECT 4127634
+DROP TABLE
+SELECT 546028
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 697418
+DROP TABLE
+SELECT 4154226
+DROP TABLE
+SELECT 380131
+DROP TABLE
+SELECT 4976408
+DROP TABLE
+SELECT 1991167
+DROP TABLE
+SELECT 4377900
+DROP TABLE
+SELECT 546028
+DROP TABLE
+SELECT 2187060
+DROP TABLE
+SELECT 2217787
+DROP TABLE
+SELECT 43342
+DROP TABLE
+SELECT 243283
+DROP TABLE
+SELECT 174269
+DROP TABLE
+SELECT 794232
+DROP TABLE
+SELECT 7887354
+DROP TABLE
+SELECT 4126485
+DROP TABLE
+SELECT 1377514
+DROP TABLE
+SELECT 13519533
+DROP TABLE
+SELECT 546028
+DROP TABLE
+SELECT 135153
+DROP TABLE
+SELECT 949901
+DROP TABLE
+SELECT 10264
+DROP TABLE
+SELECT 18085
+DROP TABLE
+SELECT 31495
+DROP TABLE
+SELECT 10668
+DROP TABLE
+SELECT 19430
+DROP TABLE
+SELECT 459800
+DROP TABLE
+SELECT 293253
+DROP TABLE
+SELECT 209376
+DROP TABLE
+SELECT 37163
+DROP TABLE
+SELECT 475214
+DROP TABLE
+SELECT 108165
+DROP TABLE
+SELECT 4098630
+DROP TABLE
+SELECT 144813
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 811585
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 8219121
+DROP TABLE
+SELECT 949901
+DROP TABLE
+SELECT 5099899
+DROP TABLE
+SELECT 94458
+DROP TABLE
+SELECT 41295
+DROP TABLE
+SELECT 839543
+DROP TABLE
+SELECT 783613
+
+2026-03-14 14:20:07 [INFO    ] All derived concepts built successfully.
+2026-03-14 14:26:56 [INFO    ] ============================================================
+2026-03-14 14:26:56 [INFO    ] STEP 1: Verifying Docker is running
+2026-03-14 14:26:56 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] Docker is running. Server version: 27.4.0
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 2: Ensuring Docker network 'mimic-net' exists
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] SKIP: Network 'mimic-net' already exists.
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 3: Building PostgreSQL image 'mimic-db'
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] SKIP: Image 'mimic-db' already exists — skipping build.
+2026-03-14 14:26:57 [INFO    ]       To force a rebuild: docker rmi mimic-db
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 4: Starting PostgreSQL container 'mimic_postgres'
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] Container 'mimic_postgres' is already running.
+2026-03-14 14:26:57 [INFO    ] Container 'mimic_postgres' is already on network 'mimic-net'.
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 5: Waiting for PostgreSQL to accept connections
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] Polling every 5 s (up to 30 attempts) ...
+2026-03-14 14:26:57 [INFO    ] PostgreSQL is ready (attempt 1/30).
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 6: Creating MIMIC-IV schemas and tables (create.sql)
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] SKIP: All 3 MIMIC-IV schemas already exist with 22 tables in mimiciv_hosp.
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 7: Loading MIMIC-IV data (load_gz.sql)
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] NOTE: This step can take many hours for the full dataset.
+2026-03-14 14:26:57 [INFO    ] SKIP: mimiciv_hosp.patients already contains 364627 rows — data already loaded.
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 8: Adding primary key constraints (constraint.sql)
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] SKIP: Constraints already exist (admissions_pk + admissions_patients_fk) — skipping constraint.sql.
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 9: Creating indexes (index.sql)
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] SKIP: Index 'admissions_idx01' already exists — skipping index.sql.
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:26:57 [INFO    ] STEP 10: Validating row counts (validate.sql)
+2026-03-14 14:26:57 [INFO    ] ============================================================
+2026-03-14 14:27:25 [INFO    ] Validation completed — all row counts match expected values.
+2026-03-14 14:27:25 [INFO    ] ============================================================
+2026-03-14 14:27:25 [INFO    ] STEP 11: Creating MIMIC-IV-ED schema and tables (ED create.sql)
+2026-03-14 14:27:25 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] SKIP: mimiciv_ed schema already exists with 6 tables.
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] STEP 12: Loading MIMIC-IV-ED data (ED load_gz.sql)
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] SKIP: mimiciv_ed.edstays already contains 425087 rows — ED data already loaded.
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] STEP 13: Adding MIMIC-IV-ED constraints (ED constraint.sql)
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] SKIP: ED constraints already exist (edstays_pk + diagnosis_edstays_fk) — skipping ED constraint.sql.
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] STEP 14: Creating MIMIC-IV-ED indexes (ED index.sql)
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] SKIP: Index 'edstays_idx01' already exists — skipping ED index.sql.
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] STEP 15: Validating MIMIC-IV-ED row counts (ED validate.sql)
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] ED validation completed — all row counts match expected values.
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] STEP 16: Creating mimiciv_derived schema + helper functions
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] mimiciv_derived schema is ready.
+2026-03-14 14:27:26 [INFO    ] Step 16a: Installing helper functions (postgres-functions.sql) ...
+2026-03-14 14:27:26 [INFO    ] SKIP: Helper function 'regexp_extract' already exists in mimiciv_derived — skipping postgres-functions.sql.
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] STEP 17: Building MIMIC-IV derived concepts (postgres-make-concepts.sql)
+2026-03-14 14:27:26 [INFO    ] ============================================================
+2026-03-14 14:27:26 [INFO    ] SKIP: mimiciv_derived.age already exists — derived concepts already built.
+2026-03-14 14:27:26 [INFO    ] SKIP: mimiciv_derived.arb already exists.
